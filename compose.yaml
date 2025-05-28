@@ -1,0 +1,39 @@
+version: '3.9'
+
+services:
+  web:
+    build: .
+    container_name: django_web
+    ports:
+      - "8001:8000"
+    environment:
+      - DEBUG=True
+      - DB_NAME=notedb
+      - DB_USER=noter
+      - DB_PASSWORD=noterpass
+      - DB_HOST=db
+      - DB_PORT=5432
+    depends_on:
+      - db
+    volumes:
+      - ./src:/app
+    networks:
+      - notenet
+
+  db:
+    image: postgres:15
+    container_name: postgres_db
+    environment:
+      POSTGRES_DB: notedb
+      POSTGRES_USER: noter
+      POSTGRES_PASSWORD: noterpass
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - notenet
+
+volumes:
+  pgdata:
+
+networks:
+  notenet:
