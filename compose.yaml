@@ -3,6 +3,8 @@ version: '3.9'
 services:
   web:
     build: .
+    image: burakakca51/django-notes-app:latest
+
     container_name: django_web
     ports:
       - "8001:8000"
